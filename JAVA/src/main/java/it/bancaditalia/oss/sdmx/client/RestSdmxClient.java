@@ -46,6 +46,8 @@ import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
 import java.util.zip.ZipInputStream;
+import java.util.Base64;
+import java.util.Base64.Encoder;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSocketFactory;
@@ -428,7 +430,9 @@ public class RestSdmxClient implements GenericSDMXClient
 		if (containsCredentials)
 		{
 			logger.fine("Setting http authorization");
-			String auth = javax.xml.bind.DatatypeConverter.printBase64Binary((user + ":" + pw).getBytes());
+			//String auth = javax.xml.bind.DatatypeConverter.printBase64Binary((user + ":" + pw).getBytes());
+			Encoder encoder = Base64.getEncoder();
+			String auth = encoder.encodeToString((user + ":" + pw).getBytes());
 			conn.setRequestProperty("Authorization", "Basic " + auth);
 		}
 		if (supportsCompression)
