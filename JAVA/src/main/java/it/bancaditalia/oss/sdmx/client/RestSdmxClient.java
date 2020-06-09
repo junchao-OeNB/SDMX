@@ -38,6 +38,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.Base64.Encoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,8 +48,6 @@ import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
 import java.util.zip.ZipInputStream;
-import java.util.Base64;
-import java.util.Base64.Encoder;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSocketFactory;
@@ -430,7 +430,6 @@ public class RestSdmxClient implements GenericSDMXClient
 		if (containsCredentials)
 		{
 			logger.fine("Setting http authorization");
-			//String auth = javax.xml.bind.DatatypeConverter.printBase64Binary((user + ":" + pw).getBytes());
 			Encoder encoder = Base64.getEncoder();
 			String auth = encoder.encodeToString((user + ":" + pw).getBytes());
 			conn.setRequestProperty("Authorization", "Basic " + auth);
